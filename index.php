@@ -1,8 +1,15 @@
 <?php
     include 'config.php';
+
+    if(isset($_POST['login'])){
+        header("location: login.php");
+    }
+    if(isset($_POST['register'])){
+        header("location: register.php");
+    }
 ?>
 <body>
-    <section class="w-[100vw]">
+    <section class="w-[99vw]">
          <div class="md:w-[40%] w-[100%] md:h-[100vh] h-[200px] md:float-right md:bg-purple-800/50">
             <img src="./assets/mat.png" alt="" class="md:w-[500px] w-[100px] h-[100px] md:h-[500px] relative z-10 rounded-full mx-auto mt-[100px] border-solid border-2 border-zinc-300">
         </div>
@@ -14,10 +21,13 @@
         <div class="md:w-[500px] w-[100%] mx-auto mt-[100px]">
             <div class="blob w-[660px] h-[660px] absolute -z-50 left-0 hidden md:inline"></div>
             <p class="text-left font-semibold pl-[10px] md:pl-[0px]">please start with:</p>
-            <button class="w-[300px] h-[50px] bg-purple-800 font-bold rounded-md mt-5 hover:bg-purple-900">Registering Account</button>
-
+            <form action="" method="POST">
+                <button name="register" class="w-[300px] h-[50px] bg-purple-800 font-bold rounded-md mt-5 hover:bg-purple-900">Registering Account</button>
+            </form>
             <p class="text-left font-semibold mt-10 pl-[10px] md:pl-[0px]">Or:</p>
-            <button class="w-[300px] h-[50px] bg-purple-800 font-bold rounded-md mt-5 hover:bg-purple-900">Log into account</button>
+            <form action="" method="POST">
+                <button name="login" class="w-[300px] h-[50px] bg-purple-800 font-bold rounded-md mt-5 hover:bg-purple-900">Log into account</button>
+            </form>
         </div>
         </div>
    </section>

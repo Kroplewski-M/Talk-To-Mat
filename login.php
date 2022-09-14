@@ -1,5 +1,9 @@
 <?php
     include 'config.php';
+
+    if(isset($_POST['register'])){
+        header("location: register.php");
+    }
 ?>
 
 <body>
@@ -27,17 +31,13 @@
                 <p class="font-bold text-[40px]">Dont have an account?</p>
                 <p class="font-light text-[30px]">Register one now below</p>
                 <div class="w-[140px] mx-auto">
-                    <button name="register" type="submit" class="w-[140px] h-[40px] rounded-md font-bold bg-zinc-300 text-[#111111] mt-10 hover:bg-zinc-400">Register Account</button>
+                    <form action="" method="POST">
+                        <button name="register" type="submit" class="w-[140px] h-[40px] rounded-md font-bold bg-zinc-300 text-[#111111] mt-10 hover:bg-zinc-400">Register Account</button>
+                    </form>
                 </div>
             </div>
         </div>
 
    </section>
-
-
-
-
-
-
 </body>
 </html>
