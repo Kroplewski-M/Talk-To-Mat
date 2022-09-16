@@ -1,12 +1,18 @@
 <?php
-    include 'config.php'
+    include 'config.php';
+    
+    $name = "Guest";
+
+    if(isset($_SESSION['name'])){
+        $name = $_SESSION['name'];
+    }
 ?>
 
 <body>
     <section class="max-w-[800px] h-[90vh] mx-auto rounded-md bg-purple-900 mt-10 mb-[50px] pb-10 md:pb-0 pt-5">
         <nav class="pl-10 rounded-md bg-[#222222] mb-5 mx-auto w-[90%] h-[60px]">
             <img src="./assets/user.png" alt="" class="w-[35px] mt-[10px] float-left hover:cursor-pointer">
-            <p class="float-left mt-[13px] font-bold ml-5">Mateusz Kroplewski</p>
+            <p class="float-left mt-[13px] font-bold ml-5"><?php echo $name ?></p>
             <img src="./assets/settings.png" alt="" class="w-[35px] mt-[8px] float-right mr-10 hover:cursor-pointer">
         </nav>
         <div class="messages w-[90%] h-[88%] bg-[#111111] mx-auto rounded-md relative pt-5">
