@@ -1,3 +1,18 @@
+<?php
+    session_start();
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'Mateusz');
+    define('DB_PASS', '123456');
+    define('DB_NAME', 'chat');
+
+    $conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+
+    if($conn->connect_error){
+        die('Connection Failed' . $conn->connect_error);
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="bg-[#111111]">
 <head>
