@@ -1,13 +1,22 @@
 <?php
     include 'config.php';
-
     $name = "Guest";
+    $email = "unknown";
+    $age = "unkown";
+    $password="none";
+    $is_logged = false;
 
     if(isset($_SESSION['name'])){
         $name = $_SESSION['name'];
         $email = $_SESSION['email'];
         $age = "20";
         $password="*********";
+        $is_logged = true;
+
+    }
+    if(isset($_POST['logout'])){
+        session_destroy();
+        header("location: index.php");
     }
 ?>
 
@@ -72,16 +81,19 @@
     </section>
       <!--ACCOUNT SETTINGS -->
       <section class="w-[99vw] h-[100vh] backdrop-blur-md absolute top-0">
-            <div class="max-w-[500px] h-[auto] bg-[#111111] mx-auto rounded-md mt-10 text-zinc-300 relative">
+            <div class="max-w-[500px] h-[500px] bg-[#111111] mx-auto rounded-md mt-10 text-zinc-300 relative">
                 <img src="./assets/close.png" alt="" class="w-[30px] absolute right-2 mt-[3px] hover:cursor-pointer">
                 <p class="text-[30px] text-center font-bold">Account Settings</p>
 
                 <div class="text-center font-bold text-[20px] mt-[50px]">
-                    <p class="border-solid border-2 border-zinc-300 rounded-sm h-[40px] w-[400px] mx-auto">Name: <span class="font-normal ml-5"> <?= $name ?> </span></p>
-                    <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] w-[400px] mx-auto">Email: <span class="font-normal ml-5"> <?= $email ?> </span></p>
-                    <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] w-[400px] mx-auto">Age: <span class="font-normal ml-5"> <?= $age ?> </span></p>
-                    <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] w-[400px] mx-auto">Password: <span class="font-normal ml-5"> <?= $password ?> </span></p>
-                    <button class="w-[230px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10">change Information</button>
+                    <p class="border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Name: <span class="font-normal ml-5"> <?= $name ?> </span></p>
+                    <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Email: <span class="font-normal ml-5"> <?= $email ?> </span></p>
+                    <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Age: <span class="font-normal ml-5"> <?= $age ?> </span></p>
+                    <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Password: <span class="font-normal ml-5"> <?= $password ?> </span></p>
+                    <button class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-[40px] md:ml-[100px] px-[5px]">Change Information</button>
+                    <form action="" method="POST">
+                        <button value="submit" name="logout" class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-5 px-[5px]" id="logout">Logout</button>
+                    </form>
                 </div>
             </div>
       </section>  

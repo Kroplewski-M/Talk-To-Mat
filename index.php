@@ -8,6 +8,7 @@
         header("location: register.php");
     }
 ?>
+
 <body>
     <section class="w-[99vw]">
          <div class="md:w-[40%] w-[100%] md:h-[100vh] h-[200px] md:float-right md:bg-purple-800/50">
