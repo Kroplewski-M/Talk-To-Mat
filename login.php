@@ -27,6 +27,7 @@
         if($user && password_verify($password, $user['password'])){
             $_SESSION['name'] = $user['name'];
             $_SESSION['UID'] = $user['uid'];
+            $_SESSION['email'] = $user['email'];
             header('location: chat.php');
         }else{
             if($_POST['email'] !== '' && $_POST['password'] !== ''){
@@ -71,7 +72,6 @@
                 </div>
             </div>
         </div>
-
    </section>
 </body>
 </html>
