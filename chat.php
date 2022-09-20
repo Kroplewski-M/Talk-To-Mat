@@ -84,15 +84,32 @@
             <div class="max-w-[500px] h-[500px] bg-[#111111] mx-auto rounded-md mt-10 text-zinc-300 relative">
                 <img src="./assets/close.png" alt="" class="w-[30px] absolute right-2 mt-[3px] hover:cursor-pointer" id="closeSettings">
                 <p class="text-[30px] text-center font-bold">Account Settings</p>
-
-                <div class="text-center font-bold text-[20px] mt-[50px]">
+                
+                <!--SHOW INFO-->
+                <div class="text-center font-bold text-[20px] mt-[50px]" id="information">
                     <p class="border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Name: <span class="font-normal ml-5"> <?= $name ?> </span></p>
                     <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Email: <span class="font-normal ml-5"> <?= $email ?> </span></p>
                     <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Age: <span class="font-normal ml-5"> <?= $age ?> </span></p>
                     <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Password: <span class="font-normal ml-5"> <?= $password ?> </span></p>
-                    <button class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-[40px] md:ml-[100px] px-[5px]">Change Information</button>
+                    <button class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-[40px] md:ml-[100px] px-[5px] font-bold" id="toggleForm">Change Information</button>
                     <form action="" method="POST">
-                        <button value="submit" name="logout" class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-5 px-[5px]" id="logout">Logout</button>
+                        <button value="submit" name="logout" class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-5 px-[5px] font-bold" id="logout">Logout</button>
+                    </form>
+                </div>
+                <!--SHOW FORM-->
+                <div class="text-center font-bold text-[20px] mt-[50px] hidden" id="accountForm">  
+                    <form action="">
+                        <label for="name">Name:</label>
+                        <input type="text" placeholder="<?php echo $name ?>" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
+                        <br><br>
+                        <label for="email">Email:</label>
+                        <input type="email" placeholder="<?php echo $email ?>" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
+                        <br><br>
+                        <label for="email">Password:</label>
+                        <input type="password" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
+                        <br>
+                        <button value="submit" name="submit" class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-5 px-[5px] font-bold ml-[40px] md:ml-[165px]" id="submit">Submit</button>
+                        <button name="back" class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-5 px-[5px] font-bold ml-[20px]"id="back">Back</button>
                     </form>
                 </div>
             </div>
@@ -155,4 +172,28 @@
     }
     //TOGGLE FORM
     let showForm = false;
+    let toggleForm = document.querySelector('#toggleForm');
+    let accountForm = document.querySelector('#accountForm');
+    let info = document.querySelector('#information');
+    let back = document.querySelector('#back');
+
+    toggleForm.addEventListener("click", ()=>{
+        showForm = !showForm;
+        displayForm();
+    });
+    back.addEventListener("click", (event)=>{
+        event.preventDefault();
+        showForm = !showForm;
+        displayForm();
+    });
+
+    function displayForm(){
+        if(showForm){
+            info.classList.add("hidden");
+            accountForm.classList.remove("hidden");
+        }else{
+            info.classList.remove("hidden");
+            accountForm.classList.add("hidden");
+        }
+    }
 </script>
