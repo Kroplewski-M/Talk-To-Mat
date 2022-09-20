@@ -25,7 +25,7 @@
         <nav class="pl-10 rounded-md bg-[#222222] mb-5 mx-auto w-[90%] h-[60px]">
             <img src="./assets/user.png" alt="" class="w-[35px] mt-[10px] float-left hover:cursor-pointer">
             <p class="float-left mt-[13px] font-bold ml-5 text-zinc-300"><?php echo $name ?></p>
-            <img src="./assets/settings.png" alt="" class="w-[35px] mt-[8px] float-right mr-10 hover:cursor-pointer">
+            <img src="./assets/settings.png" alt="" class="w-[35px] mt-[8px] float-right mr-10 hover:cursor-pointer" id="showSettings">
         </nav>
         <div class="messages w-[90%] h-[88%] bg-[#111111] mx-auto rounded-md relative pt-5">
 
@@ -80,9 +80,9 @@
         </div>
     </section>
       <!--ACCOUNT SETTINGS -->
-      <section class="w-[99vw] h-[100vh] backdrop-blur-md absolute top-0">
+      <section class="w-[99vw] h-[100vh] backdrop-blur-md absolute top-0 hidden" id="settings">
             <div class="max-w-[500px] h-[500px] bg-[#111111] mx-auto rounded-md mt-10 text-zinc-300 relative">
-                <img src="./assets/close.png" alt="" class="w-[30px] absolute right-2 mt-[3px] hover:cursor-pointer">
+                <img src="./assets/close.png" alt="" class="w-[30px] absolute right-2 mt-[3px] hover:cursor-pointer" id="closeSettings">
                 <p class="text-[30px] text-center font-bold">Account Settings</p>
 
                 <div class="text-center font-bold text-[20px] mt-[50px]">
@@ -128,3 +128,31 @@
         background: rgb(110,48,155); 
     }
 </style>
+
+<script>
+    //TOGGLE SETTINGS
+    let settingsBtn = document.querySelector('#showSettings');
+    let settings = document.querySelector('#settings');
+    let closeSettings = document.querySelector('#closeSettings');
+    let showSettings = false;
+
+    settingsBtn.addEventListener("click", ()=>{
+        showSettings = !showSettings;
+        toggleShowSettings();
+    });
+    closeSettings.addEventListener("click", ()=>{
+        showSettings = !showSettings;
+        toggleShowSettings();
+    });
+
+    function toggleShowSettings(){
+        if(showSettings){
+            settings.classList.remove('hidden');
+        }
+        else{
+            settings.classList.add('hidden');
+        }
+    }
+    //TOGGLE FORM
+    let showForm = false;
+</script>
