@@ -18,6 +18,10 @@
         session_destroy();
         header("location: index.php");
     }
+    if(isset($_POST['login'])){
+        session_destroy();
+        header("location: login.php");
+    }
 ?>
 
 <body>
@@ -84,9 +88,15 @@
             <div class="max-w-[500px] h-[500px] bg-[#111111] mx-auto rounded-md mt-10 text-zinc-300 relative">
                 <img src="./assets/close.png" alt="" class="w-[30px] absolute right-2 mt-[3px] hover:cursor-pointer" id="closeSettings">
                 <p class="text-[30px] text-center font-bold">Account Settings</p>
-                
+                <!--IF ITS A GUES-->
+                <div class="text-center font-bold text-[20px] mt-[50px]" id="guest">
+                    <p class="text-[25px]">You are not logged in!</p>
+                    <form action="" method="POST">
+                        <button value="submit" name="login" class="w-[300px] h-[45px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-10 md:ml-[100px] px-[5px] font-bold" id="login">Login</button>
+                    </form>
+                </div>
                 <!--SHOW INFO-->
-                <div class="text-center font-bold text-[20px] mt-[50px]" id="information">
+                <div class="text-center font-bold text-[20px] mt-[50px] hidden" id="information">
                     <p class="border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Name: <span class="font-normal ml-5"> <?= $name ?> </span></p>
                     <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Email: <span class="font-normal ml-5"> <?= $email ?> </span></p>
                     <p class="mt-10 border-solid border-2 border-zinc-300 rounded-sm h-[40px] max-w-[400px] mx-auto">Age: <span class="font-normal ml-5"> <?= $age ?> </span></p>
@@ -147,6 +157,16 @@
 </style>
 
 <script>
+    let guestSettings =  document.querySelector('#guest');
+    let info = document.querySelector('#information');
+    //CHECK IF USER IS LOGGED IN    
+    let loggedIn = '<?= $is_logged ?>';
+    if(loggedIn){
+        guestSettings.classList.add('hidden');
+        information.classList.remove('hidden');
+    }
+
+
     //TOGGLE SETTINGS
     let settingsBtn = document.querySelector('#showSettings');
     let settings = document.querySelector('#settings');
@@ -174,7 +194,6 @@
     let showForm = false;
     let toggleForm = document.querySelector('#toggleForm');
     let accountForm = document.querySelector('#accountForm');
-    let info = document.querySelector('#information');
     let back = document.querySelector('#back');
 
     toggleForm.addEventListener("click", ()=>{
