@@ -38,6 +38,7 @@
         if($message != ''){
             $sql = "INSERT INTO messages (uid,body) VALUES ('$UID','$message')";
             mysqli_query($conn,$sql);
+            $message = "";
         }
     }
 
@@ -62,22 +63,22 @@
                             if($row["uid"] == $UID){
                                 echo '
                                 <div class="w-[100%] min-h-[150px]">
-                                    <div class="max-w-[400px] min-h-[100px] rounded-md bg-blue-800 ml-5 pl-[5px] mt-5 float-right mr-5">
+                                    <div class="max-w-[400px] min-w-[150px] min-h-[30px] rounded-md bg-blue-800 ml-5 pl-[5px] mt-5 float-right mr-5 relative">
                                         <p class="text-zinc-500 font-light w-[100%]">'. $name . '</p>
-                                        <p class="text-zinc-300 font-semibold w-[90%]">'. $row['body'] . '</p>
-                                        <p class="text-zinc-500 font-light w-[100%] text-[10px] sticky bottom-0 pt-[5px]">'. $row['time'] . '</p>
+                                        <p class="text-zinc-300 font-semibold w-[90%] mb-[5px] pb-5">'. $row['body'] . '</p>
+                                        <p class="text-zinc-500 font-light w-[100%] text-[10px] absolute pt-[5px]">'. $row['time'] . '</p>
                                     </div>
                                 </div>
                                 ';
                             }else{
                                 $sql2 = "SELECT * FROM users WHERE uid=$row[uid]";
-                                $result = $conn->query($sql2);
-                                $getName = $result->fetch_assoc();
+                                $result2 = $conn->query($sql2);
+                                $getName = $result2->fetch_assoc();
                                 echo '
-                                <div class="max-w-[300px] min-h-[100px] rounded-md bg-purple-800 ml-5 pl-[5px] mt-5">
+                                <div class="max-w-[300px] min-w-[100px] min-h-[100px] rounded-md bg-purple-800 ml-5 pl-[5px] mt-5 relative">
                                 <p class="text-zinc-500 font-light w-[100%]">'. $getName['name'] .'</p>
-                                <p class="text-zinc-300 font-semibold w-[90%]">'. $row['body'] . '</p>
-                               <p class="text-zinc-500 font-light w-[100%] text-[10px] sticky bottom-0 pt-[5px]">'. $row['time'] . '</p>
+                                <p class="text-zinc-300 font-semibold w-[90%] pb-5">'. $row['body'] . '</p>
+                               <p class="text-zinc-500 font-light w-[100%] text-[10px] absolute bottom-0 pt-[5px]">'. $row['time'] . '</p>
                             </div>
                                 ';
                             }
