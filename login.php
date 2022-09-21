@@ -28,6 +28,7 @@
             $_SESSION['name'] = $user['name'];
             $_SESSION['UID'] = $user['uid'];
             $_SESSION['email'] = $user['email'];
+            $_SESSION['age'] = $user['age'];
             header('location: chat.php');
         }else{
             if($_POST['email'] !== '' && $_POST['password'] !== ''){
