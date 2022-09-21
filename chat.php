@@ -6,6 +6,8 @@
     $password="none";
     $is_logged = false;
     $UID = "Guest";
+    $guestError = "You must be logged in to send a message!";
+    $showGuestError = false;
 
     //SET LOGGED IN USER
     if(isset($_SESSION['name'])){
@@ -34,11 +36,15 @@
     //SEND MESSAGE
     $message = "";
     if(isset($_POST['send'])){
-        $message = $_POST['message'];
-        if($message != ''){
-            $sql = "INSERT INTO messages (uid,body) VALUES ('$UID','$message')";
-            mysqli_query($conn,$sql);
-            $message = "";
+        if($name != "Guest"){
+            $message = $_POST['message'];
+            if($message != ''){
+                $sql = "INSERT INTO messages (uid,body) VALUES ('$UID','$message')";
+                mysqli_query($conn,$sql);
+                $message = "";
+            }
+        }else{
+            $showGuestError = true;
         }
     }
 
@@ -241,4 +247,8 @@
         }
     }
     
+    if(<?php echo $showGuestError ?>){
+        showSettings = !showSettings;
+        toggleShowSettings();
+    }
 </script>
