@@ -42,57 +42,62 @@
         }
     }
 
+        //RETRIEVE MESSAGES
+        function getMessages($conn,$UID,$name){
+            $sql = "SELECT * FROM messages";
+            $result = $conn->query($sql);
+            if($result->num_rows >0){
+                //OUTPUT MESSAGES
+                while($row = $result->fetch_assoc()){
+                    if($row["uid"] == $UID){
+                        echo '
+                        <div class="w-[100%] min-h-[150px]">
+                            <div class="max-w-[400px] min-w-[150px] min-h-[30px] rounded-md bg-blue-800 ml-5 pl-[5px] mt-5 float-right mr-5 relative">
+                                <p class="text-zinc-500 font-light w-[100%]">'. $name . '</p>
+                                <p class="text-zinc-300 font-semibold w-[90%] mb-[5px] pb-5">'. $row['body'] . '</p>
+                                <p class="text-zinc-500 font-light w-[100%] text-[10px] absolute pt-[5px]">'. $row['time'] . '</p>
+                            </div>
+                        </div>
+                        ';
+                    }else{
+                        $sql2 = "SELECT * FROM users WHERE uid=$row[uid]";
+                        $result2 = $conn->query($sql2);
+                        $getName = $result2->fetch_assoc();
+                        echo '
+                        <div class="max-w-[300px] min-w-[100px] min-h-[100px] rounded-md bg-purple-800 ml-5 pl-[5px] mt-5 relative">
+                        <p class="text-zinc-500 font-light w-[100%]">'. $getName['name'] .'</p>
+                        <p class="text-zinc-300 font-semibold w-[90%] pb-5">'. $row['body'] . '</p>
+                       <p class="text-zinc-500 font-light w-[100%] text-[10px] absolute bottom-0 pt-[5px]">'. $row['time'] . '</p>
+                    </div>
+                        ';
+                    }
+                }
+            }
+
+        }
  
 ?>
 
 <body>
-    <section class="max-w-[1000px] h-[100vh] mx-auto rounded-md bg-purple-900  mb-[50px] pb-10 md:pb-0 pt-5">
+    <section class="max-w-[1000px] h-[100vh] mx-auto rounded-md bg-purple-900  mb-[50px] pb-10 md:pb-0 pt-5 relative">
         <nav class="pl-10 rounded-md bg-[#222222] mb-5 mx-auto w-[90%] h-[60px]">
             <img src="./assets/user.png" alt="" class="w-[35px] mt-[10px] float-left hover:cursor-pointer">
             <p class="float-left mt-[13px] font-bold ml-5 text-zinc-300"><?php echo $name ?></p>
             <img src="./assets/settings.png" alt="" class="w-[35px] mt-[8px] float-right mr-10 hover:cursor-pointer" id="showSettings">
         </nav>
         <div class="messages w-[90%] h-[88%] bg-[#111111] mx-auto rounded-md relative pt-5">
-            <?php
-                   //RETRIEVE MESSAGES
-                    $sql = "SELECT * FROM messages";
-                    $result = $conn->query($sql);
-                    if($result->num_rows >0){
-                        //OUTPUT MESSAGES
-                        while($row = $result->fetch_assoc()){
-                            if($row["uid"] == $UID){
-                                echo '
-                                <div class="w-[100%] min-h-[150px]">
-                                    <div class="max-w-[400px] min-w-[150px] min-h-[30px] rounded-md bg-blue-800 ml-5 pl-[5px] mt-5 float-right mr-5 relative">
-                                        <p class="text-zinc-500 font-light w-[100%]">'. $name . '</p>
-                                        <p class="text-zinc-300 font-semibold w-[90%] mb-[5px] pb-5">'. $row['body'] . '</p>
-                                        <p class="text-zinc-500 font-light w-[100%] text-[10px] absolute pt-[5px]">'. $row['time'] . '</p>
-                                    </div>
-                                </div>
-                                ';
-                            }else{
-                                $sql2 = "SELECT * FROM users WHERE uid=$row[uid]";
-                                $result2 = $conn->query($sql2);
-                                $getName = $result2->fetch_assoc();
-                                echo '
-                                <div class="max-w-[300px] min-w-[100px] min-h-[100px] rounded-md bg-purple-800 ml-5 pl-[5px] mt-5 relative">
-                                <p class="text-zinc-500 font-light w-[100%]">'. $getName['name'] .'</p>
-                                <p class="text-zinc-300 font-semibold w-[90%] pb-5">'. $row['body'] . '</p>
-                               <p class="text-zinc-500 font-light w-[100%] text-[10px] absolute bottom-0 pt-[5px]">'. $row['time'] . '</p>
-                            </div>
-                                ';
-                            }
-                        }
-                    }
-            ?>
-           <div class="sticky bottom-0 w-[100%] h-[60px] bg-[#222222] rounded-b-md mt-10 ">
-            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
-                <input type="text" name="message" id="" class="mt-[15px] w-[85%] bg-transparent text-zinc-300 ml-5" placeholder="Type your message here....">
-                <img src="./assets/send.png" alt="" class="float-right w-[30px] mt-[13px] mr-[15px] hover:cursor-pointer">
-                <button value="submit" name="send" class="absolute right-4 mt-[16px] bg-transparent w-[30px] h-[30px]"></button>
-            </form>
-           </div>
-
+            <div class="h-[100%]">
+                <?php
+                    getMessages($conn,$UID,$name);
+                ?>
+            </div>
+        </div>
+        <div class="absolute -bottom-5 w-[100%] h-[60px] bg-[#222222] rounded-b-md">
+         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
+             <input type="text" name="message" id="" class="mt-[15px] w-[85%] bg-transparent text-zinc-300 ml-5" placeholder="Type your message here....">
+             <img src="./assets/send.png" alt="" class="float-right w-[30px] -mt-[25px] md:mt-[10px] mr-[15px] hover:cursor-pointer">
+             <button value="submit" name="send" class="absolute right-4 mt-[16px] bg-transparent w-[30px] h-[30px]"></button>
+         </form>
         </div>
     </section>
       <!--ACCOUNT SETTINGS -->
@@ -173,6 +178,10 @@
 </style>
 
 <script>
+    let messages = document.querySelector('.messages');
+    messages.scrollTop = messages.scrollHeight;
+
+
     let guestSettings =  document.querySelector('#guest');
     let info = document.querySelector('#information');
     //CHECK IF USER IS LOGGED IN    
@@ -231,4 +240,5 @@
             accountForm.classList.add("hidden");
         }
     }
+    
 </script>
