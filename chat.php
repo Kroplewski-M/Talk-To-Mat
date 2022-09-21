@@ -135,11 +135,11 @@
                     <form action="">
                         <label for="name">Name:</label>
                         <br>
-                        <input type="text" placeholder="<?php echo $name ?>" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
+                        <input type="text" placeholder="<?= $name ?>" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
                         <br><br>
                         <label for="email">Email:</label>
                         <br>
-                        <input type="email" placeholder="<?php echo $email ?>" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
+                        <input type="email" placeholder="<?=$email ?>" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
                         <br><br>
                         <label for="email">Password:</label>
                         <br>
@@ -191,8 +191,8 @@
     let guestSettings =  document.querySelector('#guest');
     let info = document.querySelector('#information');
     //CHECK IF USER IS LOGGED IN    
-    let loggedIn = '<?= $is_logged ?>';
-    if(loggedIn){
+    let isLogged = '<?= $is_logged ?>';
+    if(isLogged){
         guestSettings.classList.add('hidden');
         information.classList.remove('hidden');
     }
@@ -246,8 +246,8 @@
             accountForm.classList.add("hidden");
         }
     }
-    
-    if(<?php echo $showGuestError ?>){
+    let showGuestError = '<?= $showGuestError ?>';
+    if(showGuestError){
         showSettings = !showSettings;
         toggleShowSettings();
     }
