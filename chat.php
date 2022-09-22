@@ -30,7 +30,46 @@
 
     //UPDATE INFO
     $updatedName = $updatedEmail = $updatedPassword = '';
-    //
+    $changes = array();
+    $noChanges = false;
+    if(isset($_POST['changeInfo'])){
+        if($_POST['name'] != ""){
+            $updatedName = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $changes[] = 'name';
+        }
+        if($_POST['email'] != ""){
+            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $changes[] = 'email';
+        }
+        if($_POST['password'] != ""){
+            $updatedPassword = password_hash(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS),PASSWORD_DEFAULT);
+            $changes[] = 'password';
+        }
+
+        //UPDATE INFO
+        if(in_array('name', $changes)){
+            $sql = "UPDATE users SET name='$updatedName' WHERE uid='$UID'";
+            $name = $_SESSION['name'] = $updatedName;
+            mysqli_query($conn,$sql);
+        }
+        if(in_array('email', $changes)){
+            $sql = "UPDATE users SET email='$updatedEmail' WHERE uid='$UID'";
+            $email = $_SESSION['email'] = $updatedEmail;
+            mysqli_query($conn,$sql);
+        }
+        if(in_array('password', $changes)){
+            $newPass = 
+            $sql = "UPDATE users SET password='$updatedPassword' WHERE uid='$UID'";
+            mysqli_query($conn,$sql);
+        }
+        if(empty($changes)){
+            $noChanges = true;
+        }
+        else{
+            echo '<script>Changes made: '. print_r($changes) .'</script>';
+        }
+
+    }
 
 
     //SEND MESSAGE
@@ -130,25 +169,30 @@
                     </form>
                 </div>
                 <!--SHOW FORM-->
-                <div class="text-center font-bold text-[20px] mt-[50px] hidden" id="accountForm">  
+                <div class="text-center font-bold text-[20px] mt-[50px] hidden relative" id="accountForm">  
                     <p class='text-red-400 '>Only input fields you want to change</p>
-                    <form action="">
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
                         <label for="name">Name:</label>
                         <br>
-                        <input type="text" placeholder="<?= $name ?>" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
+                        <input type="text" name="name" placeholder="<?= $name ?>" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
                         <br><br>
                         <label for="email">Email:</label>
                         <br>
-                        <input type="email" placeholder="<?=$email ?>" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
+                        <input type="email" name="email" placeholder="<?=$email ?>" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
                         <br><br>
                         <label for="email">Password:</label>
                         <br>
-                        <input type="password" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
+                        <input type="password" name="password" class="w-[200px] h-[30px] bg-[#222222] rounded-md text-zinc-300 pl-[5px]">
                         <br>
-                        <button value="submit" name="submit" class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-5 px-[5px] font-bold ml-[40px] md:ml-[165px]" id="submit">Submit</button>
+                        <button value="submit" name="changeInfo" class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-5 px-[5px] font-bold ml-[40px] md:ml-[165px]" id="submit">Submit</button>
                         <button name="back" class="max-w-[200px] h-[35px] bg-purple-900 rounded-md mt-10 mb-10 float-left ml-5 px-[5px] font-bold ml-[20px]"id="back">Back</button>
                     </form>
                 </div>
+                        <?php
+                            if($noChanges){
+                                echo "<p class='text-red-500 font-light absolute bottom-0 md:ml-[200px] ml-[100px]'>No changes made!</p>";
+                            }
+                        ?>
             </div>
       </section>  
 </body>
