@@ -66,6 +66,7 @@
             $noChanges = true;
         }
         else{
+            $noChanges = false;
             echo '<script>Changes made: '. print_r($changes) .'</script>';
         }
 
